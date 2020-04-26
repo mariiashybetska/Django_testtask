@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Start page{% endblock title%}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+<h1>User info</h1>
+<p>User id: {{ user.id }}</p>
+<p>Username:{{ user.username }}</p>
+<p>First name: {{ user.first_name }} </p>
+<p>Last_name: {{ user.last_name }} </p>
+<p>Biography: {{ user.bio }} </p>
+<p>Phone: {{ user.phone }}</p>
+<p>Email: {{ user.email }}</p>
+
+<a href ="{% url 'account:edit' user.id %}"><button>Edit</button></a>
+
+{% else %}
+<p><a href ="{% url 'login' %}"><button>Sign In</button></a></p>
+<p><a href ="{% url 'account:sign-up' %}"><button>Sign Up</button></a></p>
+{% endif %}
+{% endblock content%}

@@ -13,6 +13,9 @@ class User(AbstractUser):
     bio = models.TextField(max_length=1000, blank=True)
     email = models.EmailField(unique=True)
     phone = models.CharField(max_length=30, unique=True)
+    username = models.CharField(max_length=100, unique=True)
+
+
 
 
 
