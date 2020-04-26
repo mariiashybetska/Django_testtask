@@ -20,14 +20,14 @@ class CustomLogger:
         request_time = time.time() - time_start
         request_path = request.path
 
-        if request.user.pk is None:
-            request.user.pk = 0
+        if request.user.id is None:
+            request.user.id = 0
 
         Logger.objects.create(
             path=request_path,
             method=request.method,
             r_time=request_time,
-            user_id=request.user.pk
+            user_id=request.user.id
         )
 
         return response

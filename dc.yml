@@ -1,0 +1,51 @@
+version: "3"
+
+services:
+  #wsgi
+  backend:
+    build: .
+    command: python /srv/project/src/manage.py runserver 0:8000
+    container_name: backend_django_testtask
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - ./:/srv/project
+    ports:
+      - "8000:8000"
+      - "8001:8001"
+    depends_on:
+      - postgres
+      - memcached
+
+  memcached:
+    image: memcached:latest
+    container_name: memcached_django_testtask
+    restart: always
+
+  postgres:
+    image: postgres:11.3
+    container_name: postgres_django_testtask
+    restart: always
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  nginx:
+    image: nginx:1.17.4-alpine
+    container_name: nginx
+    volumes:
+      - ./nginx:/etc/nginx/conf.d/
+      - ./static:/etc/nginx/static/
+    ports:
+      - "81:80"
+      - "443:443"
+    depends_on:
+      - backend
+
+volumes:
+  pgdata: {}
