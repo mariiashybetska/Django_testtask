@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 
 '''
 Create profile app (first name, last name, data of birth, biography, contacts).
+
 '''
 
 
@@ -14,6 +15,15 @@ class User(AbstractUser):
     email = models.EmailField(unique=True)
     phone = models.CharField(max_length=30, unique=True)
     username = models.CharField(max_length=100, unique=True)
+
+
+class Logger(models.Model):
+    created = models.DateTimeField(auto_now=True)
+    path = models.CharField(max_length=250)
+    method = models.CharField(max_length=50)
+    r_time = models.CharField(max_length=50)
+    user_id = models.IntegerField()
+
 
 
 
